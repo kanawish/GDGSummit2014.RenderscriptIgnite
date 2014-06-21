@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+
+# IDEA Ignores
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Mac specific
+.DS_Store

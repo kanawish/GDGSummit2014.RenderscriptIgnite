@@ -1,0 +1,150 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // ** apt support begin **
+        // See: http://stackoverflow.com/questions/20742900/how-do-i-get-dagger-and-butterknife-working-with-gradle
+        // See: https://github.com/Jimdo/gradle-apt-plugin
+        repositories {
+            maven {
+                url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            }
+        }
+        // Other option: https://github.com/uPhyca/gradle-android-apt-plugin
+        classpath 'com.jimdo.gradle:gradle-apt-plugin:0.2-SNAPSHOT'
+        // ** apt support end **
+
+        /*
+         Spoooon!
+         - Intro: https://github.com/square/spoon/issues/9
+         - https://github.com/x2on/gradle-spoon-plugin or
+         - https://github.com/stanfy/spoon-gradle-plugin ?
+        */
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.9.6'
+
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+
+// This is where we set up javadoc/source browsing.
+apply plugin: 'idea'
+idea{
+    module {
+        // if you love browsing Javadoc
+        downloadJavadoc = true
+
+        // and love reading sources
+        downloadSources = true
+    }
+}
+
+apply plugin: 'android'
+
+apply plugin: 'apt'
+
+apply plugin: 'spoon'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        renderscriptTargetApi 19
+        // Uncomment the following to activate android.support.v8.renderscript:
+        // renderscriptSupportMode true
+
+        testPackageName "com.gdg.montreal.android.renderscript.app.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+//        testHandleProfiling true
+//        testFunctionalTest true
+    }
+
+    testBuildType "debug"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+spoon {
+    // Enable debug output
+    debug = true
+
+    // Set custom test reports directory (defaults to "spoon")
+    // baseOutputDir = file("$buildDir/custom-report-dir")
+
+    // Enable setting test class/method-to-be-run from command line. E.g.:
+    // $> ../gradlew spoonFreeDebugTest -PspoonClassName=com.stanfy.spoon.example.test.MainActivityTest -PspoonMethodName=testSetText
+    if (project.hasProperty('spoonClassName')) {
+        className = project.spoonClassName
+
+        if (project.hasProperty('spoonMethodName')) {
+            methodName = project.spoonMethodName
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+
+// For help finding dependencies and latest versions: http://gradleplease.appspot.com/
+ext.daggerVersion = '1.2.1';
+ext.ottoVersion = '1.3.4';
+ext.butterknifeVersion = '5.0.0';
+ext.retrofitVersion = '1.5.0';
+ext.okHTTPVersion = '1.5.4';
+ext.gsonVersion = '2.2.4';
+ext.rxJavaCoreVersion = '0.18.3';
+
+ext.playServicesVersion = '4.3.23';
+// ext.support = '19.1';
+
+dependencies {
+
+    // ** apt configuration **
+    apt "com.squareup.dagger:dagger-compiler:${daggerVersion}" // http://square.github.io/dagger/
+    apt "com.jakewharton:butterknife:${butterknifeVersion}" // http://jakewharton.github.io/butterknife/
+
+    // ** 'Basic' project dependencies **
+    compile "com.squareup.dagger:dagger:${daggerVersion}"
+    compile "com.jakewharton:butterknife:${butterknifeVersion}"
+    compile "com.squareup:otto:${ottoVersion}" // http://square.github.io/otto/
+    compile "com.squareup.retrofit:retrofit:${retrofitVersion}" // http://square.github.io/retrofit/
+    compile "com.squareup.okhttp:okhttp:${okHTTPVersion}" // http://square.github.io/okhttp/
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "com.netflix.rxjava:rxjava-core:${rxJavaCoreVersion}" // https://github.com/Netflix/RxJava
+
+
+    // ** Google dependencies
+    compile "com.google.android.gms:play-services:${playServicesVersion}" // http://developer.android.com/google/play-services/index.html
+
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // ** Testing dependencies
+    androidTestCompile "com.jayway.android.robotium:robotium-solo:5.1" // https://code.google.com/p/robotium/
+    androidTestCompile "com.squareup.spoon:spoon-client:1.1.1"
+
+}
