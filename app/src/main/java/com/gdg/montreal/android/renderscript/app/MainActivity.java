@@ -38,12 +38,6 @@ public class MainActivity extends Activity {
         ViewTreeObserver.OnGlobalLayoutListener layoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                // We need to wait for global layout, width and height have been initialized.
-                Bitmap lhSourceBitmap = decodeScaledBitmapResource(leftHandImageView,R.drawable.yellow_background);
-                // This function will vignette the source bitmap.
-                Bitmap lhOutputBitmap = vignetteBitmap(lhSourceBitmap);
-                // Assign bitmap to imageView.
-                leftHandImageView.setImageBitmap(lhOutputBitmap);
 
                 Bitmap rhSourceBitmap = decodeScaledBitmapResource(rightHandImageView,R.drawable.vespa_right);
                 // This function will blur the source bitmap.
