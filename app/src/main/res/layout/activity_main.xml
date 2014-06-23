@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/red_background"
+            android:src="@drawable/vespa_left"
             />
     <ImageView
             android:id="@+id/rightHandImageView"
@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/yellow_background"
+            android:src="@drawable/vespa_right"
             />
     </LinearLayout>
 

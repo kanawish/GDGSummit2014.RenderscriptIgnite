@@ -111,7 +111,10 @@ public class MainActivity extends Activity {
         RenderScript rs = RenderScript.create(MainActivity.this);
 
         // We create an empty bitmap matching the source bitmap size and configuration.
-        Bitmap outputBitmap = Bitmap.createBitmap(sourceBitmap.getWidth(), sourceBitmap.getHeight(), sourceBitmap.getConfig());
+        Bitmap outputBitmap = Bitmap.createBitmap(
+                sourceBitmap.getWidth(),
+                sourceBitmap.getHeight(),
+                sourceBitmap.getConfig());
 
         // Allocations are the primary method through which we pass data to and from a Renderscript 'kernel'.
         // (More on this later)
@@ -154,13 +157,11 @@ public class MainActivity extends Activity {
         Allocation tmpIn = Allocation.createFromBitmap(rs, sourceBitmap);
         Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
 
-
         // This instantiates the generated script. Naming convention is ScriptC_xyz
         ScriptC_vignette_full scriptVignette = new ScriptC_vignette_full(rs,getResources(),R.raw.vignette_full);
 
         // Vignette parameter assignments
-        float center_x = 1f;
-        float center_y = 0.5f;
+        float center_x = 1f; float center_y = 0.5f;
         float scale = 0.8f;
         float shade = 0.8f; // 0.0f light -> 1.0f dark
         float slope = 5.0f; // Rate at which we swing from dark to light
@@ -185,4 +186,5 @@ public class MainActivity extends Activity {
 
         return outputBitmap;
     }
+
 }
