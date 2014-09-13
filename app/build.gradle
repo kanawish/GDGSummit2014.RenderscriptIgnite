@@ -23,7 +23,7 @@ buildscript {
         */
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.9.6'
 
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.+' // parent assigns this?
     }
 }
 
@@ -39,26 +39,26 @@ idea{
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 apply plugin: 'apt'
 
 apply plugin: 'spoon'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
 
     lintOptions {
         disable 'InvalidPackage'
     }
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 19
+        minSdkVersion 17
+        targetSdkVersion 20
         versionCode 1
         versionName "1.0"
-        renderscriptTargetApi 19
+        renderscriptTargetApi 17
         // Uncomment the following to activate android.support.v8.renderscript:
         // renderscriptSupportMode true
 
@@ -118,7 +118,7 @@ ext.okHTTPVersion = '1.5.4';
 ext.gsonVersion = '2.2.4';
 ext.rxJavaCoreVersion = '0.18.3';
 
-ext.playServicesVersion = '4.3.23';
+ext.playServicesVersion = '5.0.77';
 // ext.support = '19.1';
 
 dependencies {

@@ -1,6 +1,9 @@
 .gradle
 /local.properties
 
+# Android Ignores
+build/
+
 # IDEA Ignores
 *.iml
 *.ipr
